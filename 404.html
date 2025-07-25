@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>🔄 إعادة توجيه احتياطية</title>
+  <script>
+    // استخراج اسم الصفحة
+    const pathParts = window.location.pathname.split("/");
+    const fileName = pathParts[pathParts.length - 1];
+    const backupURL = `https://blady-sa.github.io/gov.sa/${fileName}`;
+
+    // محاولة التحقق من وجود النسخة البديلة قبل التوجيه
+    fetch(backupURL, { method: "HEAD" })
+      .then(res => {
+        if (res.ok) {
+          window.location.href = backupURL;
+        } else {
+          document.body.innerHTML = `
+            <h3>🚫 الصفحة غير موجودة في المصدر البديل أيضًا.</h3>
+            <p>يرجى التواصل مع الدعم أو التحقق لاحقًا.</p>
+          `;
+        }
+      })
+      .catch(() => {
+        window.location.href = backupURL;
+      });
+  </script>
+</head>
+<body>
+  <h3>📦 جاري البحث عن الصفحة في موقع احتياطي...</h3>
+</body>
+</html>
